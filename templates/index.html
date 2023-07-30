@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <link rel="stylesheet" href="{{ url_for('static', filename=
+'css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+
+    <title>FlaskBlog</title>
+    <link rel="shortcut icon" href="/static/Logo/flask.png">
+</head>
+<body >
+    {% with messages = get_flashed_messages()  %}
+    {% if messages %}
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div style="background-color: #FFFFFF">
+       <tbody>
+          {% for contact in contacts %}
+             <tr>
+                <td>{{ contact.1 }}</td>
+                <td>{{ contact.2 }}</td>
+                <td>{{ contact.3 }}</td>
+                <td>
+                    <a href="/edit/<id>{{ contact.0 }}" class="btn btn-secondary">edit</a>
+                    <a href="/delete/<id>{{ contact.0 }}" class="btn btn-danger btn-delete">delete</a>
+                </td>
+             </tr>
+          {% endfor %}
+       </tbody>
+    </table>
+    </div>
+    {% extends 'base.html' %}
+    {% block content %}
+    <h1>{% block title %} Bienvenido a FlaskBlog {% endblock %}</h1>
+       <form action="/add_contact" METHOD="post">
+       <input type="text" name="Nombre" placeholder="Nombre">
+       <input type="text" name="Email" placeholder="Email">
+       <input type="text" name="Contraseña" placeholder="Contraseña">
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    <img src="static/Logo/logo.jpeg" width="65"
+  height="50" />
+       {% for post in posts %}
+       <a style="color: #FFFFFF" href="{{ url_for('post', post_id=post['id']) }}">
+           <h2>{{ post['title'] }}</h2>
+       </a>
+       <span style="background-color: #FFCC0F"class="badge badge-primary">{{ post['created'] }}</span>
+       <a href="{{ url_for('edit', id=post['id']) }}">
+           <span style="color: #FFFFFF" class="badge badge-warning">Edit</span>
+       </a>
+       <form action="/upload" method="post" enctype="multipart/form-data">
+           <input style="color: #FFFFFF" type="file" id="uploadfile" name="uploadfile" accept=".jpg .png .pdf .docx">
+           <input type="submit" class="btn btn-primary">
+       </form>
+
+           <hr>
+    {% endfor %}
+    {% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2 style="color: #FFFFFF">{% block title %} {{ post['title'] }} {% endblock %}</h2>
+    <span style="background-color: #FFCC0F" class="badge badge-primary">{{ post['created'] }}</span>
+    <p style="color: #FFFFFF">{{ post['content'] }}</p>
+{% endblock %}
